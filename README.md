@@ -4,4 +4,3 @@ CSUMB CST205 Group Project - Group 16
 - Salihullah Salarzai
 - Jun Ming Tan
 - Bradley Wernick
-- Rudy Cruz
