@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ fontawesome_html() }}
+	<title>Online Whiteboard</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- <script src="https://kit.fontawesome.com/fb76f746e5.js" crossorigin="anonymous"></script> -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+{% block content %}
+<body>
+    <!-- Bootstrap navbar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">Online Whiteboard</a>
+            </div>
+            <!-- Whiteboard toolbar -->
+            <ul class="nav navbar-nav">
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li  style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-paint-brush fa-2x"></i></button></li>
+                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-eraser fa-2x"></i></button></li>
+                
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                
+                <li class="nav-item dropdown">
+                        <a style="color:white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><b>Brush Size&nbsp;</b><i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu" style="background-color:#222;">
+                            <ul style="list-style-type: none;">
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle"></i></button></li>
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle fa-2x"></i></button></li>
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle fa-3x"></i></button></li>
+                            </ul>
+                        </div>
+                </li>
+                
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            </ul>
+            <!-- End toolbar -->
+
+            <!-- Share/Join buttons -->
+            <button style="float:right;" class="btn btn-primary navbar-btn" id="joinBtn" data-toggle="modal" data-target="#modalJoin">Join</button>
+            <!-- not sure why this button does not appear -->
+            <button style="float:right;" class="btn btn-success navbar-btn" id="shareBtn" data-toggle="modal" data-target="#modalShare">Share</button>
+            <!-- end buttons -->
+        </div>
+    </nav>
+    <!-- end navbar -->
+
+    <!-- Join Modal -->
+    <div id="modalJoin" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Join Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end join modal -->
+
+    <!-- Share Modal -->
+    <div id="modalShare" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Share Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end share modal -->
+
+    <div class="container">
+        <!-- page content here -->
+    </div>
+
+</body>
+{% endblock %}
+</html>
