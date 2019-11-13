@@ -1,7 +1,9 @@
-from flask import Flask, render_template, url_for
+from quart import Quart, render_template
 
-app = Flask(__name__)
+app = Quart(__name__)
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+@app.route("/")
+async def hello():
+    return await render_template("index.html")
+
+app.run()
