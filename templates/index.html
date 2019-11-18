@@ -9,6 +9,7 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/client_whiteboard.js') }}"></script>
 
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
@@ -24,8 +25,8 @@
             <!-- Whiteboard toolbar -->
             <ul class="nav navbar-nav">
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                <li  style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-paint-brush fa-2x"></i></button></li>
-                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-eraser fa-2x"></i></button></li>
+                <li  style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush"><i class="fa fa-paint-brush fa-2x"></i></button></li>
+                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="eraser"><i class="fa fa-eraser fa-2x"></i></button></li>
                 
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                 
@@ -33,9 +34,9 @@
                         <a style="color:white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><b>Brush Size&nbsp;</b><i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu" style="background-color:#222;">
                             <ul style="list-style-type: none;">
-                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle"></i></button></li>
-                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle fa-2x"></i></button></li>
-                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn"><i class="fa fa-circle fa-3x"></i></button></li>
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush_size_1"><i class="fa fa-circle"></i></button></li>
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush_size_2"><i class="fa fa-circle fa-2x"></i></button></li>
+                                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush_size_3"><i class="fa fa-circle fa-3x"></i></button></li>
                             </ul>
                         </div>
                 </li>
@@ -100,6 +101,8 @@
 
     <div class="container">
         <!-- page content here -->
+        <canvas id="myCanvas" style="cursor: crosshair; position: fixed;">
+        </canvas>
     </div>
 
 </body>
