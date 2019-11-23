@@ -18,6 +18,9 @@ window.onload = function() {
     // brush_size_1.onclick = function(){ line_width = 1; };
     // brush_size_2.onclick = function(){ line_width = 3; };
     // brush_size_3.onclick = function(){ line_width = 5; };
+    // eraser.onclick = function(){
+    // 	ctx.clearRect(0,0,myCanvas.width, myCanvas.height);
+    // }
 
     // Fill Window Width and Height
     myCanvas.width = window.innerWidth;
@@ -90,11 +93,19 @@ window.onload = function() {
 	};
 
 	function onColorClick(color) {
-    // Start a new path to begin drawing in a new color.
-    	// ctx.beginPath();
-    	// ctx.closePath();
-    	// Select the new color.
-    	stroke_style = color;
+		ctx.closePath();
+    	ctx.beginPath();
+		stroke_style = color;
+
+    	var borderColor = 'white';
+    	if (color == 'white' || color == 'yellow') {
+        borderColor = 'black';
+    	}
+    	$('#' + lastColor).css("border", "0px dashed white");
+    	$('#' + color).css("border", "1px dashed " + borderColor);
+
+    	lastColor = color;
+    	
     }
 	
 	// Touch Events
@@ -106,6 +117,10 @@ window.onload = function() {
 	$('#colorToolbar div').click(function(evt) {
 	console.log(evt) 
      onColorClick(evt.target.id)});
+
+	$('#eraser').click(function(evt){
+		ctx.clearRect(0,0, myCanvas.width, myCanvas.height)
+	});
 
 	// Disable Page Move
 	document.body.addEventListener('touchmove',function(evt){
