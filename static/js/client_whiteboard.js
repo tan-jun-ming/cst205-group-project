@@ -27,8 +27,7 @@ window.onload = function() {
     myCanvas.height = window.innerHeight;
 	
 	// Set Background Color
-    ctx.fillStyle="#fff";
-    ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+	ctx.fillStyle="#fff";
 	
     // Mouse Event Handlers
 	if(myCanvas){
@@ -106,13 +105,21 @@ window.onload = function() {
 
     	lastColor = color;
     	
-    }
+	}
+	
+	function getMousePos(canvas, evt) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+		};
+	}
 	
 	// Touch Events
 	myCanvas.addEventListener('touchstart', draw.start, false);
 	myCanvas.addEventListener('touchend', draw.end, false);
 	myCanvas.addEventListener('touchmove', draw.move, false);
-
+	
 	// Color toolabar click
 	$('#colorToolbar div').click(function(evt) {
 	console.log(evt) 
