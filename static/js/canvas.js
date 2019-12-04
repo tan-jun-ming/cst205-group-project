@@ -14,6 +14,8 @@ function writeMessage(canvas, message) {
   }
   var canvas = document.getElementById('myCanvas');
   var context = canvas.getContext('2d');
+  var canvasData = context.getImageData(0, 0, canvas.width, canvas.height);
+  var websocket = new WebSocket('ws://localhost:5000/ws');
 
   canvas.addEventListener('mousemove', function(evt) {
     var mousePos = getMousePos(canvas, evt);
@@ -23,10 +25,11 @@ function writeMessage(canvas, message) {
     //This sends enough packets to bury an elephant
     //The packets also error for some reason
     var payload = {
-        x: mousePos.x,
-        y: mousePos.y
-    }
-    $.post( "/postmethod", {
-        data: payload 
-    });
+        x: Math.floor(mousePos.x - canvas.width/2),
+        y: Math.floor(mousePos.y - canvas.height/2)
+    };
+
+    websocket.send(JSON.stringify(payload));
+    //console.log(canvasData.data);
+    
   }, false);

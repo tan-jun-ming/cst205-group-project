@@ -4,14 +4,15 @@ Also includes progenitor room code.
 """
 
 # Quart needs Python 3.7 and a library called Hypercorn to deploy btw
-from quart import Quart, websocket, copy_current_websocket_context
+from quart import Quart, websocket, copy_current_websocket_context, render_template
 import asyncio
+import json
 
 app = Quart(__name__)
 
 @app.route("/")
 async def hello():
-    return "despacito"
+    return await render_template("index.html")
 
 # Define connection and room dicts.
 # Should we make it persistent and store it in a seperate db?
@@ -55,23 +56,24 @@ async def receiving():
     while True:
         # Receives data from each websocket and does nothing with it (for now)
         data = await websocket.receive()
-        obj = websocket._get_current_object()
-        if obj in connections:
-            ...
+        # obj = websocket._get_current_object()
+        # if obj in connections:
+        #     ...
+        print(data)
 
-@app.websocket('/room/<room_id>')
-async def ws(room_id):
+@app.websocket('/ws')
+async def ws():
     obj = websocket._get_current_object()
 
     # Put connection in a dict
-    connections[obj] = Connection(obj, room_id)
+    # connections[obj] = Connection(obj, room_id)
 
     # Create rooms in a dict and add the member
     # Perhaps find some way to do this more elegantly?
-    if not room_id in rooms:
-        rooms[room_id] = Room(room_id)
+    # if not room_id in rooms:
+    #     rooms[room_id] = Room(room_id)
 
-    rooms[room_id].members.add(connections[obj])
+    # rooms[room_id].members.add(connections[obj])
 
     # Tie receiving/sending loops to the connection
     # Not sure if we need both of these if we only want to receive from these objects.
