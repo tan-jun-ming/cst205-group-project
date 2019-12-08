@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% block head %}
 	<title>Online Whiteboard</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +15,7 @@
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
     <!-- <script src="https://kit.fontawesome.com/fb76f746e5.js" crossorigin="anonymous"></script> -->
+    {% endblock %}
 </head>
 <body>
     <!-- Bootstrap navbar -->
@@ -26,12 +28,8 @@
             <ul class="nav navbar-nav">
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
                 <li  style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush"><i class="fa fa-paint-brush fa-2x"></i></button></li>
-                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="eraser"><i class="fa fa-eraser fa-2x"></i></button></li>
-                
-                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-                
                 <li class="nav-item dropdown">
-                        <a style="color:white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><b>Brush Size&nbsp;</b><i class="fa fa-caret-down"></i></a>
+                        <a style="color:white;" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu" style="background-color:#222;">
                             <ul style="list-style-type: none;">
                                 <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="brush_size_1"><i class="fa fa-circle"></i></button></li>
@@ -40,11 +38,16 @@
                             </ul>
                         </div>
                 </li>
+                <li style="color:white;"><button style="background-color:#222;" class="btn navbar-btn" id="eraser"><i class="fa fa-eraser fa-2x"></i></button></li>
+                
+                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                
+               
                 
                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
             </ul>
 
-            <div id="colorToolbar" style="none; padding-top: 15px"> 
+            <div id="colorToolbar" style="none; padding-top: 15px;"> 
                 <div id="black" style="background:black; width:25px; height:25px; display: flex; align-items: center; float: left"></div>
                 <!-- <div style="clear: both;"></div>  -->
                 <div id="white" style="background:white; width:25px; height:25px; display: flex; align-items: center; float: left;"></div>
@@ -145,6 +148,7 @@
     <div class="container">
         <!-- page content here -->
         <canvas id="myCanvas" style="cursor: crosshair; position: absolute; top: 70px; left: 20px; bottom: 0px; right: 0px; ">
+            <script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
         </canvas>
     </div>
 
