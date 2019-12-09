@@ -6,4 +6,4 @@ from hypercorn.config import Config
 config = Config()
 config.bind = [sys.argv[1]]
 
-loop.run_until_complete(serve(app, Config()))
+loop.run_until_complete(serve(app, config))
