@@ -405,8 +405,6 @@ window.onload = function() {
 		let width = maxX - minX;
 		let height = maxY - minY;
 		
-		// console.log(pixels.size, minX, minY, maxX, maxY, width, height)
-
 		if (!width || !height){
 			return;
 		}
@@ -472,8 +470,6 @@ window.onload = function() {
 				this.lastX = currX;
 				this.lastY = currY;
 
-				// console.log(prevX, prevY, currX, currY)
-
 				place_pixels(calculate_line(prevX, prevY, currX, currY, ctx.lineWidth, stroke_style), false)
 
 			}
@@ -522,8 +518,10 @@ window.onload = function() {
 });
 
 	$('#modalName').on('show.bs.modal', function (event) {
-		$("#nickname-box").val("").attr("placeholder", nickname);
-		$("#nickname-feedback").text("\u{200B}")
+		if (room_id){
+			$("#nickname-box").val("").attr("placeholder", nickname);
+			$("#nickname-feedback").text("\u{200B}")
+		}
 	})
 	$('#modalName').on('shown.bs.modal', function (event) {
 		$("#nickname-box").focus();
