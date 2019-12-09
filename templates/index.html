@@ -74,18 +74,22 @@
 </head>
 <body>
     <div class="toolbar bg-dark text-light p-3 d-flex align-items-center">
-        <div class="d-flex flex-wrap flex-grow-1 justify-content-center align-items-center">
+        <div class="d-flex flex-grow-1 justify-content-center align-items-center">
             <div class="pr-3 d-none d-md-block"><h2><a href="/">Online Whiteboard</a></h2></div>
-            <div class="btn-group p-1">
-                <button class="btn btn-outline-light pt-1" type="button" id="brush" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons align-self-center">brush</i></button>
-                <div class="dropdown-menu" aria-labelledby="brush">
-                    <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_1"><i class="material-icons" style="font-size: 1.5em;">fiber_manual_record</i></button>
-                    <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_2"><i class="material-icons" style="font-size: 2em;">fiber_manual_record</i></button>
-                    <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_3"><i class="material-icons" style="font-size: 2.5em;">fiber_manual_record</i></button>
+            <div class="p-0 d-flex flex-wrap">
+                <div class="btn-group">
+                    <button class="btn btn-outline-light pt-1" type="button" id="brush" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons align-self-center">brush</i></button>
+                    <div class="dropdown-menu" aria-labelledby="brush">
+                        <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_1"><i class="material-icons" style="font-size: 1.5em;">fiber_manual_record</i></button>
+                        <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_2"><i class="material-icons" style="font-size: 2em;">fiber_manual_record</i></button>
+                        <button class="dropdown-item d-flex align-items-center flex-column px-0 mx-0" id="brush_size_3"><i class="material-icons" style="font-size: 2.5em;">fiber_manual_record</i></button>
+                    </div>
+                    <button class="btn btn-outline-light pt-1" id="nickname" data-toggle="modal" data-target="#modalName"><i class="material-icons align-self-center">face</i></button>
                 </div>
-                <button class="btn btn-outline-light pt-1" id="nickname" data-toggle="modal" data-target="#modalName"><i class="material-icons align-self-center">face</i></button>
-                <button class="btn btn-outline-light pt-1" id="save"><i class="material-icons align-self-center">save</i></button>
-                <button class="btn btn-outline-light pt-1" id="eraser"><i class="material-icons align-self-center">delete</i></button>
+                <div class="btn-group">
+                    <button class="btn btn-outline-light pt-1" id="save"><i class="material-icons align-self-center">save</i></button>
+                    <button class="btn btn-outline-light pt-1" id="eraser"><i class="material-icons align-self-center">delete</i></button>
+                </div>
             </div>
     
             <div id="colorToolbar" class="p-1 d-flex justify-content-center flex-wrap flex-grow-1"></div>

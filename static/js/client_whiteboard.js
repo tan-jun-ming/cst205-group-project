@@ -137,7 +137,6 @@ let colors = [
 	[139, 195, 74],
 	[255, 235, 59],
 	[255, 152, 0],
-	[255, 87, 34],
 	[96, 125, 139],
 ]
 
@@ -268,7 +267,7 @@ window.onload = function() {
 				brush = $("<i class='material-icons' style='font-size:5em;margin-right:-0.5em'>brush</i>"
 				).css("color", `RGB(${color[0]}, ${color[1]}, ${color[2]})`);
 				name_card = $("<span></span>").text(i.nick).css("padding-top", "3em");
-							
+
 				cc = coords_to_corner(i.x, i.y)
 				userdiv = $("<div class='brush'></div>").append(brush).append(name_card).css("left", cc[0] + myCanvas.offsetLeft).css("top", cc[1] + myCanvas.offsetTop - 70);
 				$("body").append(userdiv);
@@ -315,6 +314,9 @@ window.onload = function() {
 	for (i = 0; i < colors.length; i++){
 		color = colors[i]
 		toolbar_item = $("<div></div>").addClass("toolbar-item").attr("data-color", i).css("background", `RGB(${color[0]}, ${color[1]}, ${color[2]})`);
+		if (i == 1){
+			toolbar_item.addClass("selected");
+		}
 		$("#colorToolbar").append(toolbar_item);
 	}
 
