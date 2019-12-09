@@ -270,7 +270,7 @@ window.onload = function() {
 				name_card = $("<span></span>").text(i.nick).css("padding-top", "3em");
 							
 				cc = coords_to_corner(i.x, i.y)
-				userdiv = $("<div class='brush'></div>").append(brush).append(name_card).css("left", cc[0]).css("top", cc[1]);
+				userdiv = $("<div class='brush'></div>").append(brush).append(name_card).css("left", cc[0] + myCanvas.offsetLeft).css("top", cc[1] + myCanvas.offsetTop);
 				$("body").append(userdiv);
 	
 			}
