@@ -1,3 +1,3 @@
-from main import app
+from main import app, loop
 
-app.run()
+app.run(loop=loop)
