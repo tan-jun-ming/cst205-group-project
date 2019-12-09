@@ -204,5 +204,5 @@ async def ws(room_id):
         consumer.cancel()
         rooms[room_id].members.pop(obj)
 
-
-# app.run(loop=loop)
+if __name__ == '__main__':
+    app.run(loop=loop)
