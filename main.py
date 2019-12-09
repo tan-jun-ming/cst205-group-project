@@ -205,4 +205,4 @@ async def ws(room_id):
         rooms[room_id].members.pop(obj)
 
 
-app.run(loop=loop)
+# app.run(loop=loop)
