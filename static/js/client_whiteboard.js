@@ -1,7 +1,51 @@
+
+/*
+* Safari and Edge polyfill for createImageBitmap
+* https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/createImageBitmap
+*
+* Support source image types Blob and ImageData.
+*
+* From: https://dev.to/nektro/createimagebitmap-polyfill-for-safari-and-edge-228
+* Updated by Yoan Tournade <yoan@ytotech.com>
+*/
+if (!('createImageBitmap' in window)) {
+window.createImageBitmap = async function (data) {
+return new Promise((resolve,reject) => {
+let dataURL;
+if (data instanceof Blob) {
+				dataURL = URL.createObjectURL(data);
+			} else if (data instanceof ImageData) {
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = data.width;
+canvas.height = data.height;
+ctx.putImageData(data,0,0);
+				dataURL = canvas.toDataURL();
+			} else {
+throw new Error('createImageBitmap does not handle the provided image source type');
+			}
+const img = document.createElement('img');
+img.addEventListener('load',function () {
+resolve(this);
+			});
+img.src = dataURL;
+		});
+	};
+}
+
+
 let circles = {
 	10: calculate_circle(10),
 	20: calculate_circle(20),
 	40: calculate_circle(40),
+}
+
+
+function encode(text){
+    return btoa(pako.deflate(text, {to:'string'}));
+}
+function decode(text){
+    return pako.inflate(atob(text), {to:'string'});
 }
 
 function calculate_circle(width){
@@ -243,7 +287,7 @@ window.onload = function() {
 		let websocket = new WebSocket("ws://" + uri + "/" + room_id);
 
 		websocket.onmessage = function(event){
-			data = JSON.parse(event.data);
+			data = JSON.parse(decode(event.data));
 	
 			if (data.clear){
 				clear_canvas();
@@ -277,7 +321,7 @@ window.onload = function() {
 	
 		websocket.onopen = function ws_push(event) {
 			if (payload.x != null || payload.y != null || payload.pixels.size || payload.color != null || payload.nick != null || payload.clear != null) {
-				websocket.send(JSON.stringify(payload));
+				websocket.send(encode(JSON.stringify(payload)));
 				reset_payload()
 			}
 			setTimeout(ws_push, 50)
@@ -560,7 +604,7 @@ window.onload = function() {
 	})
 
 	$("#share-button").click(async function(e){
-		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:JSON.stringify(entire_canvas)});
+		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
 		room_id = await data.text();
 
 		window.location.replace("http://" + uri + "/" + room_id);

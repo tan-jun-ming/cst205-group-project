@@ -1,8 +1,10 @@
 # Quart needs Python 3.7 and a library called Hypercorn to deploy
-from quart import Quart, websocket, copy_current_websocket_context, render_template, request, redirect, url_for
+from quart import Quart, websocket, copy_current_websocket_context, render_template, request, redirect, url_for, abort
 import asyncio
 import random
 import json
+import base64
+import codecs
 
 loop = asyncio.get_event_loop()
 app = Quart(__name__)
@@ -27,14 +29,14 @@ room_chars = "23456789ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz"
 
 @app.route("/initialize", methods=["POST"])
 async def initialize_room():
-    try:
-        data = await request.get_data()
-        data = decode_message(data)
-        for i in data:
-            i = i.split(",")
-            i = [int(i[0]), int(i[1])]
-    except:
-        abort(400)
+    # try:
+    data = await request.get_data()
+    data = decode_message(data)
+    for i in data:
+        i = i.split(",")
+        i = [int(i[0]), int(i[1])]
+    # except:
+    #     abort(400)
 
 
     new_room_id = None
@@ -46,10 +48,11 @@ async def initialize_room():
     return new_room_id.encode("utf-8")
 
 def encode_message(msg):
-    return json.dumps(msg)
+    return base64.b64encode(codecs.encode(json.dumps(msg).encode("utf-8"), "zlib")).decode()
 
 def decode_message(msg):
-    return json.loads(msg)
+    return json.loads(codecs.decode(base64.b64decode(msg), "zlib").decode())
+
 
 def create_room(room_id, pixel_data=None):
     pixel_data = pixel_data if pixel_data else {}
