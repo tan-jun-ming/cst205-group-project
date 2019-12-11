@@ -72,7 +72,7 @@ function calculate_circle(width){
 }
 
 function calculate_line(x1, y1, x2, y2, width, color){
-	// adapted from http://www.javascriptteacher.com/bresenham-line-drawing-algorithm.html
+	// adapted from https://www.javascriptteacher.com/bresenham-line-drawing-algorithm.html
 	
     let ret = {};
 	
@@ -284,7 +284,7 @@ window.onload = function() {
 	}
 
 	if (room_id){
-		let websocket = new WebSocket("ws://" + uri + "/" + room_id);
+		let websocket = new WebSocket("wss://" + uri + "/" + room_id);
 
 		websocket.onmessage = function(event){
 			data = JSON.parse(decode(event.data));
@@ -599,15 +599,15 @@ window.onload = function() {
 		event.preventDefault();
 		join_id = $("#join-box").val();
 		if (join_id){
-			window.location.replace("http://" + uri + "/" + join_id);
+			window.location.replace("https://" + uri + "/" + join_id);
 		}
 	})
 
 	$("#share-button2").click(async function(e){
-		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
+		data = await fetch("https://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
 		room_id = await data.text();
 
-		window.location.replace("http://" + uri + "/" + room_id);
+		window.location.replace("https://" + uri + "/" + room_id);
 	})
 
 	// Disable Page Move
