@@ -280,7 +280,7 @@ window.onload = function() {
 				websocket.send(JSON.stringify(payload));
 				reset_payload()
 			}
-			setTimeout(ws_push, 20)
+			setTimeout(ws_push, 50)
 	
 		}
 

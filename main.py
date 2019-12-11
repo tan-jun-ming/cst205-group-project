@@ -51,10 +51,11 @@ def encode_message(msg):
 def decode_message(msg):
     return json.loads(msg)
 
-def create_room(room_id, data={}):
+def create_room(room_id, pixel_data=None):
+    pixel_data = pixel_data if pixel_data else {}
     if not room_id in rooms:
-        rooms[room_id] = Room(room_id, data)
-        loop.create_task(rooms[room_id].run_loop(.02))
+        rooms[room_id] = Room(room_id, pixel_data)
+        loop.create_task(rooms[room_id].run_loop())
     
     return rooms[room_id]
 
@@ -65,7 +66,6 @@ class MemberState:
         self.y = 0
 
         # Set nickname to Anonymous
-        # (Maybe follow google and add animal names as well? Would have to make sure they are unique per room.)
         self.nickname = "Anonymous Banana"
     
     def to_dict(self):
@@ -118,10 +118,22 @@ class Room:
                 **self.members[ws].to_dict()
                 }
 
-    async def run_loop(self, interval):
+    async def run_loop(self):
         while True:
-            await asyncio.sleep(interval)
+            interval = 5
+
+            member_count = len(self.members)
+            if member_count == 0:
+                await asyncio.sleep(5) # wait 5 seconds to see if anyone joins
+                if len(self.members) == 0:
+                    self.close_room()
+                    return
+
+            elif member_count >= 2:
+                interval = min(0.5, member_count * 0.025)
+
             await self.broadcast()
+            await asyncio.sleep(interval)
 
     async def broadcast(self):
         sent2 = False
@@ -168,6 +180,27 @@ class Room:
         }
 
         await ws.send(encode_message(payload))
+    
+    def member_leave(self, member):
+        self.members.pop(member)
+        
+        for m in self.members:
+            self.changed_states[m] = {
+                "pixels":{},
+                "clear": False,
+                **self.members[m].to_dict()
+            }
+
+    def close_room(self):
+        self.pixels = {}
+        for m in self.members.keys():
+            self.members.pop(m)
+            connections.pop(m)
+
+            m.close()
+        
+        rooms.pop(self.name)
+        
 
 
 async def receiving():
@@ -195,14 +228,13 @@ async def ws(room_id):
 
     await room.new_member(obj)
 
-    # Tie receiving/sending loops to the connection
-    # Not sure if we need both of these if we only want to receive from these objects.
+    # Tie sending loop to the connection
     consumer = asyncio.ensure_future(copy_current_websocket_context(receiving)(),)
     try:
         await asyncio.gather(consumer)
     finally:
         consumer.cancel()
-        rooms[room_id].members.pop(obj)
+        room.member_leave(obj)
 
 if __name__ == '__main__':
     app.run(loop=loop)
