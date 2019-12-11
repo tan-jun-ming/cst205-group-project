@@ -275,7 +275,10 @@ window.onload = function() {
     let brush_size_2 = document.getElementById("brush_size_2");
 	let brush_size_3 = document.getElementById("brush_size_3");
 	
-	let uri = `${window.location.hostname}:${window.location.port}`
+	let protocol = window.location.protocol;
+	let ws_protocol = protocol == "https:" ? "wss:" : "ws:";
+
+	let uri = `${window.location.hostname}:${window.location.port}`;
 
 	let room_id = window.location.pathname.substr(1);
 
@@ -284,7 +287,7 @@ window.onload = function() {
 	}
 
 	if (room_id){
-		let websocket = new WebSocket("wss://" + uri + "/" + room_id);
+		let websocket = new WebSocket(`${ws_protocol}//${uri}/${room_id}`);
 
 		websocket.onmessage = function(event){
 			data = JSON.parse(decode(event.data));
@@ -599,15 +602,15 @@ window.onload = function() {
 		event.preventDefault();
 		join_id = $("#join-box").val();
 		if (join_id){
-			window.location.replace("https://" + uri + "/" + join_id);
+			window.location.replace(`${protocol}//${uri}/${join_id}`);
 		}
 	})
 
 	$("#share-button2").click(async function(e){
-		data = await fetch("https://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
-		room_id = await data.text();
+		data = await fetch(`${protocol}//${uri}/initialize`, {method:"POST", body:encode(JSON.stringify(entire_canvas))});
+		join_id = await data.text();
 
-		window.location.replace("https://" + uri + "/" + room_id);
+		window.location.replace(`${protocol}//${uri}/${join_id}`);
 	})
 
 	// Disable Page Move
