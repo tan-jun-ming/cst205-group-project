@@ -43,7 +43,7 @@ async def initialize_room():
 
     create_room(new_room_id, data)
 
-    return new_room_id
+    return new_room_id.encode("utf-8")
 
 def encode_message(msg):
     return json.dumps(msg)
