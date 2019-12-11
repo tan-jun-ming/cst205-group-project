@@ -4,6 +4,14 @@ let circles = {
 	40: calculate_circle(40),
 }
 
+
+function encode(text){
+    return btoa(pako.deflate(text, {to:'string'}));
+}
+function decode(text){
+    return pako.inflate(atob(text), {to:'string'});
+}
+
 function calculate_circle(width){
 	let ret = []
 	
@@ -243,7 +251,7 @@ window.onload = function() {
 		let websocket = new WebSocket("ws://" + uri + "/" + room_id);
 
 		websocket.onmessage = function(event){
-			data = JSON.parse(event.data);
+			data = JSON.parse(decode(event.data));
 	
 			if (data.clear){
 				clear_canvas();
@@ -277,7 +285,7 @@ window.onload = function() {
 	
 		websocket.onopen = function ws_push(event) {
 			if (payload.x != null || payload.y != null || payload.pixels.size || payload.color != null || payload.nick != null || payload.clear != null) {
-				websocket.send(JSON.stringify(payload));
+				websocket.send(encode(JSON.stringify(payload)));
 				reset_payload()
 			}
 			setTimeout(ws_push, 50)
@@ -560,7 +568,7 @@ window.onload = function() {
 	})
 
 	$("#share-button").click(async function(e){
-		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:JSON.stringify(entire_canvas)});
+		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
 		room_id = await data.text();
 
 		window.location.replace("http://" + uri + "/" + room_id);
