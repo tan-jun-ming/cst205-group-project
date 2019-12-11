@@ -3,6 +3,8 @@ from quart import Quart, websocket, copy_current_websocket_context, render_templ
 import asyncio
 import random
 import json
+import base64
+import codecs
 
 loop = asyncio.get_event_loop()
 app = Quart(__name__)
@@ -46,10 +48,11 @@ async def initialize_room():
     return new_room_id
 
 def encode_message(msg):
-    return json.dumps(msg)
+    return base64.b64encode(codecs.encode(json.dumps(msg).encode("utf-8"), "zlib")).decode()
 
 def decode_message(msg):
-    return json.loads(msg)
+    return json.loads(codecs.decode(base64.b64decode(msg.encode("utf-8")), "zlib").decode())
+
 
 def create_room(room_id, data={}):
     if not room_id in rooms:
