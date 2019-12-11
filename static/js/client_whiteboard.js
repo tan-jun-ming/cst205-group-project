@@ -603,7 +603,7 @@ window.onload = function() {
 		}
 	})
 
-	$("#share-button").click(async function(e){
+	$("#share-button2").click(async function(e){
 		data = await fetch("http://" + uri + "/initialize", {method:"POST", body:encode(JSON.stringify(entire_canvas))});
 		room_id = await data.text();
 
