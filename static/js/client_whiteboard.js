@@ -284,11 +284,18 @@ window.onload = function() {
 
 	if (room_id == ""){
 		room_id = null;
-	}
 
-	if (room_id){
+		$("#nickname-form").remove();
+		$("#nickname-feedback").remove();
+		$("#nickname-disabled").css("display", "block");
+		
+	} else {
+		$("#roomcode-display").css("display", "flex");
+		$("#roomcode").text(room_id);
+		$("#roomcode").attr("href", `${protocol}//${uri}/${room_id}`);
+	
 		let websocket = new WebSocket(`${ws_protocol}//${uri}/${room_id}`);
-
+	
 		websocket.onmessage = function(event){
 			data = JSON.parse(decode(event.data));
 	
@@ -314,7 +321,7 @@ window.onload = function() {
 				brush = $("<i class='material-icons' style='font-size:5em;margin-right:-0.5em'>brush</i>"
 				).css("color", `RGB(${color[0]}, ${color[1]}, ${color[2]})`);
 				name_card = $("<span></span>").text(i.nick).css("padding-top", "3em");
-
+	
 				cc = coords_to_corner(i.x, i.y)
 				userdiv = $("<div class='brush'></div>").append(brush).append(name_card).css("left", cc[0] + myCanvas.offsetLeft).css("top", cc[1] + myCanvas.offsetTop - 70);
 				$("body").append(userdiv);
@@ -330,12 +337,7 @@ window.onload = function() {
 			setTimeout(ws_push, 50)
 	
 		}
-
-	} else {
-		$("#nickname-form").remove();
-		$("#nickname-feedback").text("Nicknames are disabled in private rooms. Share this room to enable it!");
 	}
-
 
     let line_width = 10;
 	let stroke_style = 1;
@@ -567,11 +569,10 @@ window.onload = function() {
 });
 
 	$('#modalName').on('show.bs.modal', function (event) {
-		if (room_id){
-			$("#nickname-box").val("").attr("placeholder", nickname);
-			$("#nickname-feedback").text("\u{200B}")
-		}
+		$("#nickname-box").val("").attr("placeholder", nickname);
+		$("#nickname-feedback").text("\u{200B}");
 	})
+
 	$('#modalName').on('shown.bs.modal', function (event) {
 		$("#nickname-box").focus();
 	})

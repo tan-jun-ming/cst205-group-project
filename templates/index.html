@@ -27,19 +27,28 @@
             height: 100%;
             overflow: hidden;
         }
+
         #myCanvas {
             height: 100%;
             width: 100%;
         }
+
+        #nickname-disabled {
+            display: none;
+        }
+
         a {
             color: #fff;
         }
+
         a:hover {
             color: #fff;
         }
+
         a:active {
             color: #fff;
         }
+
         .brush {
             position: absolute;
             display: flex;
@@ -49,6 +58,7 @@
                 -1px 0px 0 #fff, 0px 0px 0 #fff, 1px 0px 0 #fff,
                 -1px 1px 0 #fff, 0px 1px 0 #fff, 1px 1px 0 #fff;
         }
+
         .dropdown-menu {
             min-width: 3em;
         }
@@ -57,19 +67,43 @@
             width: 2em;
             height: 2em;
         }
+
         .toolbar-item:hover {
             border: 1px dashed white;
             cursor: pointer;
         }
+
         .toolbar-item.selected {
             border: 1px solid white;
         }
+
         canvas {
             cursor: crosshair;
         }
+
         .btn i {
             padding-top: 0.2em;
         }
+
+        #roomcode-display {
+            display: none;
+        }
+
+        .roomcode-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 0;
+        }
+
+        #roomcode {
+            font-size: 2em;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 5em;
+        }
+
     </style>
     {% endblock %}
 </head>
@@ -97,9 +131,16 @@
 
         </div>
 
-        <div class="btn-group">
-            <button type="button" class="btn btn-success navbar-btn" id="share-button2" data-toggle="modal" data-target="#modalShare">Share</button>
-            <button type="button" class="btn btn-primary navbar-btn" id="join-button" data-toggle="modal" data-target="#modalJoin">Join</button>
+        <div class="d-flex flex-wrap justify-content-center align-items-center">
+            <div id="roomcode-display" class="flex-column align-items-center mx-2">
+                <p class="roomcode-title m-0">Room Code</p>
+                <a id="roomcode" href="#"></a>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-success navbar-btn" id="share-button2" data-toggle="modal" data-target="#modalShare">Share</button>
+                <button type="button" class="btn btn-primary navbar-btn" id="join-button" data-toggle="modal" data-target="#modalJoin">Join</button>
+            </div>
+
         </div>
     </div>
 
@@ -119,7 +160,7 @@
                 <div class="modal-body">
                     <form id="join-form">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Room ID" aria-label="Nickname" id="join-box">
+                            <input type="text" class="form-control" placeholder="Room Code" aria-label="Nickname" id="join-box">
                             <div class="input-group-append">
                                 <button class="btn btn-outline-primary" type="submit">Join</button>
                             </div>
@@ -154,6 +195,7 @@
                     </div>
                 </form>
                 <p id="nickname-feedback" class="p-3 m-0">&#x200B;</p>
+                <p id="nickname-disabled" class="p-3 m-0">Nicknames are disabled in private rooms. Share this room to enable it!</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
