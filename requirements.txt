@@ -1,1 +1,2 @@
+Hypercorn==0.9.0
 git+https://gitlab.com/pgjones/quart
