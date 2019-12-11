@@ -123,7 +123,7 @@ class Room:
 
     async def run_loop(self):
         while True:
-            interval = 5
+            interval = 2
 
             member_count = len(self.members)
             if member_count == 0:
