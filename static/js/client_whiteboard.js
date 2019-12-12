@@ -372,6 +372,8 @@ window.onload = function() {
     // Mouse Event Handlers
 	if(myCanvas){
 		let isDown = false;
+		let lastX = null;
+		let lastY = null;
 		ctx.lineWidth = line_width;
 		
 		$(myCanvas)
@@ -383,6 +385,9 @@ window.onload = function() {
 			c = coords_to_center(currX, currY)
 			payload.x = c[0]
 			payload.y = c[1]
+
+			lastX = currX;
+			lastY = currY;
 
 			place_pixels(calculate_line(currX, currY, currX, currY, ctx.lineWidth, stroke_style), false)
 		})
@@ -396,8 +401,11 @@ window.onload = function() {
 
 			if(isDown !== false) {
 
-				prevX = currX - e.originalEvent.movementX
-				prevY = currY - e.originalEvent.movementY
+				prevX = lastX
+				prevY = lastY
+				
+				lastX = currX;
+				lastY = currY;
 				
 				place_pixels(calculate_line(prevX, prevY, currX, currY, ctx.lineWidth, stroke_style), false)
 
